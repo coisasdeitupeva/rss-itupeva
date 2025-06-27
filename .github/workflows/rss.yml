@@ -1,0 +1,33 @@
+name: Atualizar RSS
+
+on:
+  schedule:
+    - cron: '0 4 * * *'  # todo dia às 04h
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: |
+          pip install requests beautifulsoup4 feedgen
+
+      - name: Rodar script
+        run: python gerar_rss.py
+
+      - name: Commit RSS
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add rss.xml
+          git commit -m "Atualiza feed RSS"
+          git push
