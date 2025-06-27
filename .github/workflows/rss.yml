@@ -24,7 +24,7 @@ jobs:
       - name: Rodar script
         run: python gerar_rss.py
 
-            - name: Commit RSS
+      - name: Commit RSS
         env:
           TOKEN: ${{ secrets.ACTIONS_TOKEN }}
         run: |
