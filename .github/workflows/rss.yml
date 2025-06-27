@@ -25,11 +25,12 @@ jobs:
         run: python gerar_rss.py
 
       - name: Commit RSS
-        env:
-          TOKEN: ${{ secrets.ACTIONS_TOKEN }}
-        run: |
-          git config user.name github-actions
-          git config user.email github-actions@github.com
-          git add rss.xml
-          git commit -m "Atualiza feed RSS" || echo "nada a commitar"
-          git push https://x-access-token:${TOKEN}@github.com/${{ github.repository }} HEAD:main
+  env:
+    TOKEN: ${{ secrets.ACTIONS_TOKEN }}
+  run: |
+    git config user.name github-actions
+    git config user.email github-actions@github.com
+    git add rss.xml
+    git commit -m "Atualiza feed RSS" || echo "Nada a commitar"
+    git push https://x-access-token:${TOKEN}@github.com/${{ github.repository }} HEAD:main
+
